@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var playersCard = "card5"
+    @State private var playersScore = 0
+    @State private var pcsCard = "card9"
+    @State private var pcsScore = 0
+    
     var body: some View {
         ZStack{
             Image("background")
@@ -17,34 +23,73 @@ struct ContentView: View {
                 
                 HStack{
                     Spacer()
-                    Image("card2")
+                    Image(playersCard)
                     Spacer()
-                    Image("card3")
+                    Image(pcsCard)
                     Spacer()
                 }
                 
-                Image("dealbutton")
+                Button(action: deal,
+                       label:{ Image("dealbutton")})
+                
                 
                 HStack{
                     Spacer()
                     VStack{
-                    Text("Player")
-                    Text("0")
+                        Text("Player")
+                                   .font(.headline)
+                                   .foregroundColor(Color.white)
+                                   .padding(.bottom, 10.0)
+                                Text(String(playersScore))
+                                   .font(.largeTitle)
+                                   .foregroundColor(Color.white)
+
                     }
                     Spacer()
                     VStack{
-                    Text("CPU")
-                    Text("0")
+                        Text("PC")
+                                   .font(.headline)
+                                   .foregroundColor(Color.white)
+                                   .padding(.bottom, 10.0)
+                                Text(String(pcsScore))
+                                   .font(.largeTitle)
+                                   .foregroundColor(Color.white)
                     }
                     Spacer()
                 }
                 Spacer()
             }
-            
         }
     }
+    
+    
+    func deal() -> Void {
+        
+        let cardPrefix = "card"
+        
+        // Generate a random number for the player
+        let playersRandomNumber = Int.random(in: 2...14)
+        
+        // Update the player card
+        playersCard = cardPrefix + String(playersRandomNumber)
+        
+        
+        // Generate a random number for the pc
+        let pcsRandomNumber = Int.random(in: 2...14)
+        
+        // Update pc card
+        pcsCard = cardPrefix + String(pcsRandomNumber)
+        
+        
+        // Compare and update Player or PC Score
+        if(playersRandomNumber > pcsRandomNumber){
+            playersScore += 1
+        }else{
+            pcsScore += 1
+        }
+        
+    }
 }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
